@@ -49,7 +49,9 @@ function App() {
         className="app__table"
       />
 
-      <button className="app__button">Add Category</button>
+      <div className="app__button">
+        <button className="app__button--text">Add Category</button>
+      </div>
     </div>
   );
 }

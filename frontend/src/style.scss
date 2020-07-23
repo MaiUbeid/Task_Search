@@ -64,14 +64,19 @@ body {
   }
 
   &__button {
-    font-weight: 700;
-    border-radius: 0.5rem;
-    outline: none;
-    border: none;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    color: #ffffff;
-    text-transform: capitalize;
-    background-color: #fe2f2f;
+    margin-left: 15%;
+    text-align: left;
+
+    &--text {
+      font-weight: 700;
+      border-radius: 0.5rem;
+      outline: none;
+      border: none;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      color: #ffffff;
+      text-transform: capitalize;
+      background-color: #fe2f2f;
+    }
   }
 }
