@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import Table from './components/Table';
+import './style.scss';
 
 const GET_INFO = gql`
   {
@@ -23,8 +24,16 @@ function App() {
   const rows = [];
 
   return (
-    <div>
-      <input type="text" name="category" placeholder="Type Category" />
+    <div className="app">
+      <h1 className="app__logo">
+        Get <span className="app__logo--span">Categories</span>
+      </h1>
+      <input
+        type="text"
+        name="category"
+        placeholder="Type Category"
+        className="app__input"
+      />
       {data.allCategories.map((item) => {
         let row = { title: item.title };
         item.keywords.map((keyword) => {
@@ -34,7 +43,13 @@ function App() {
         });
       })}
 
-      <Table rows={rows} columns={['Category', 'Keywords']} />
+      <Table
+        rows={rows}
+        columns={['Category', 'Keywords']}
+        className="app__table"
+      />
+
+      <button className="app__button">Add Category</button>
     </div>
   );
 }

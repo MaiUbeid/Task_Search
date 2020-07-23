@@ -1,7 +1,5 @@
 import React from 'react';
 
-import './style.css';
-
 export default function Table({ rows, columns, id, className }) {
   const renderHead = (columnsData) => {
     return columnsData.reduce((acc, el, idx, arr) => {
