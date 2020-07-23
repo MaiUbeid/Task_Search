@@ -31,13 +31,16 @@ function App() {
       <input
         type="text"
         name="category"
-        placeholder="Type Category"
+        placeholder="Type Category..."
         className="app__input"
       />
       {data.allCategories.map((item) => {
         let row = { title: item.title };
         item.keywords.map((keyword) => {
-          row = { ...row, keywords: keyword };
+          row = {
+            ...row,
+            keywords: keyword,
+          };
           rows.push(row);
           return keyword;
         });
