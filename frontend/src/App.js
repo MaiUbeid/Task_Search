@@ -2,6 +2,8 @@ import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
+import Table from './components/Table';
+
 const GET_INFO = gql`
   {
     allCategories {
@@ -17,15 +19,22 @@ function App() {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
-  console.log(data.allCategories);
+
+  const rows = [];
+
   return (
     <div>
       <input type="text" name="category" placeholder="Type Category" />
       {data.allCategories.map((item) => {
-        return `${item.title} ... ${item.keywords.map((keyword) => {
+        let row = { title: item.title };
+        item.keywords.map((keyword) => {
+          row = { ...row, keywords: keyword };
+          rows.push(row);
           return keyword;
-        })} `;
+        });
       })}
+
+      <Table rows={rows} columns={['Category', 'Keywords']} />
     </div>
   );
 }
