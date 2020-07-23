@@ -1,14 +1,26 @@
 const { ApolloServer, gql } = require('apollo-server');
 
 const typeDefs = gql`
+  type Category {
+    id: Int
+    title: String
+    keywords: [String]
+  }
+
   type Query {
-    hello: String
+    allCategories: [Category]
+    postCategory(id: Int, title: String): [String]!
   }
 `;
 
 const resolvers = {
   Query: {
-    hello: (root, args, context) => 'Hello from Searchmetrics!',
+    allCategories: () => {
+      return [
+        { id: 1, title: 'sport', keywords: ['football, tennis'] },
+        { id: 2, title: 'dance', keywords: ['football, tennis'] },
+      ];
+    },
   },
 };
 

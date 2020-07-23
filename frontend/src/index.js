@@ -8,11 +8,9 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { ApolloProvider } from '@apollo/react-hooks';
 
-const category = 'java';
-
 const cache = new InMemoryCache();
 const link = new HttpLink({
-  uri: `https://www.datamuse.com/words?ml=${category}`,
+  uri: `http://localhost:4000`,
 });
 
 const client = new ApolloClient({

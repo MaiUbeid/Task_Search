@@ -2,12 +2,12 @@ import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
-// this is wrong here I need to make query
 const GET_INFO = gql`
   {
-    pokemons(first: 150) {
+    allCategories {
       id
-      number
+      title
+      keywords
     }
   }
 `;
@@ -17,7 +17,16 @@ function App() {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
-  return <div>{data}</div>;
+  console.log(data.allCategories);
+  return (
+    <div>
+      {data.allCategories.map((item) => {
+        return `${item.title} ... ${item.keywords.map((keyword) => {
+          return keyword;
+        })} \n `;
+      })}
+    </div>
+  );
 }
 
 export default App;
