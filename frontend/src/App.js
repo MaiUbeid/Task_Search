@@ -20,10 +20,11 @@ function App() {
   console.log(data.allCategories);
   return (
     <div>
+      <input type="text" name="category" placeholder="Type Category" />
       {data.allCategories.map((item) => {
         return `${item.title} ... ${item.keywords.map((keyword) => {
           return keyword;
-        })} \n `;
+        })} `;
       })}
     </div>
   );

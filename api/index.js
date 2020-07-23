@@ -1,5 +1,7 @@
 const { ApolloServer, gql } = require('apollo-server');
 
+const data = require('./data.json');
+
 const typeDefs = gql`
   type Category {
     id: Int
@@ -9,17 +11,13 @@ const typeDefs = gql`
 
   type Query {
     allCategories: [Category]
-    postCategory(id: Int, title: String): [String]!
   }
 `;
 
 const resolvers = {
   Query: {
     allCategories: () => {
-      return [
-        { id: 1, title: 'sport', keywords: ['football, tennis'] },
-        { id: 2, title: 'dance', keywords: ['football, tennis'] },
-      ];
+      return data;
     },
   },
 };
