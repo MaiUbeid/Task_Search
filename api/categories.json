@@ -1,0 +1,52 @@
+{
+  "allCategories": [
+    {
+      "id": 1,
+      "title": "sport",
+      "keywords": [
+        "athletics",
+        "sportsman",
+        "sportswoman",
+        "fun",
+        "play",
+        "disport",
+        "lark",
+        "boast",
+        "nonresident"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "dance",
+      "keywords": [
+        "terpsichore",
+        "trip",
+        "the light",
+        "fantastic",
+        "dancers",
+        "ballet",
+        "tango",
+        "choreography",
+        "choreographer",
+        "waltz",
+        "troupe"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "write",
+      "keywords": [
+        "publish",
+        "compose",
+        "pen",
+        "spell",
+        "drop",
+        "a line",
+        "indite",
+        "read",
+        "rewrite",
+        "submit"
+      ]
+    }
+  ]
+}

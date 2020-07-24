@@ -5,9 +5,19 @@ import gql from 'graphql-tag';
 import Table from './components/Table';
 import './style.scss';
 
-const GET_INFO = gql`
-  query allCategories($category: String) {
-    allCategories(category: $category) {
+const GET_ALL_CATEGORIES = gql`
+  {
+    getAllCategories {
+      id
+      title
+      keywords
+    }
+  }
+`;
+
+const POST_CATEGORY = gql`
+  query allKeywords($category: String) {
+    allKeywords(category: $category) {
       word
       score
       tags
@@ -17,41 +27,30 @@ const GET_INFO = gql`
 
 function App() {
   const [input, setInput] = useState('');
+  const [categories, setCategories] = useState([]);
+  const rows = [];
 
-  const [categories, setCategories] = useState(['sport']);
+  const {
+    data: Categories,
+    loading: CategoriesLoading,
+    error: CategoriesError,
+  } = useQuery(GET_ALL_CATEGORIES);
 
-  const { data, loading, error } = useQuery(GET_INFO, {
+  const { data, error, loading } = useQuery(POST_CATEGORY, {
     variables: { category: categories[categories.length - 1] },
   });
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error</p>;
-
-  const rows = [];
-  let row = {};
-  let keywordsString = '';
-  let keywordsArray = [];
-  let keywordsLength = 1;
-
-  const handelChange = ({ target: { value } }) => {
+  const handleChange = ({ target: { value } }) => {
     value = value.trim().toLowerCase();
     setInput(value);
   };
 
-  const handelClick = () => {
+  const handleClick = () => {
     setCategories((categories) => categories.concat(input));
   };
 
-  const getRows = (category) => {
-    row = { title: category };
-    data.allCategories.map((item) => {
-      keywordsString += `${item.word}, `;
-    });
-    keywordsArray = keywordsString.split(',');
-    row = { ...row, keywords: [keywordsArray.slice(0, 1)] };
-    rows.push(row);
-    return row.keywords.length;
-  };
+  if (CategoriesLoading) return <p>Loading...</p>;
+  if (CategoriesError) return <p>Error</p>;
 
   return (
     <div className="app">
@@ -64,11 +63,14 @@ function App() {
         name="category"
         placeholder="Type Category..."
         className="app__input"
-        onChange={handelChange}
+        onChange={handleChange}
       />
 
-      {categories.map((category) => {
-        keywordsLength = getRows(category);
+      {Categories.getAllCategories.map((category) => {
+        rows.push({
+          title: category.title,
+          keywords: category.keywords.slice(0, 3).join(', '),
+        });
       })}
 
       <Table
@@ -76,12 +78,10 @@ function App() {
         columns={['Category', 'Keywords', '']}
         id={1}
         className="app__table"
-        keywords={keywordsArray}
-        keywordsLength={keywordsLength}
       />
 
       <div className="app__button">
-        <button className="app__button--text" onClick={handelClick}>
+        <button className="app__button--text" onClick={handleClick}>
           Add Category
         </button>
       </div>

@@ -1,30 +1,48 @@
 const { ApolloServer, gql } = require('apollo-server');
 const axios = require('axios');
 
+const { allCategories } = require('./categories.json');
+
 const typeDefs = gql`
   type Category {
+    id: Int
+    title: String
+    keywords: [String]
+  }
+
+  type ApiCategory {
     word: String
     score: Int
     tags: [String]
   }
 
   type Query {
-    allCategories(category: String): [Category]
+    getAllCategories: [Category]
+    postCategory: [ApiCategory]
   }
 `;
 
 const resolvers = {
   Query: {
-    allCategories: async (_parent, args) => {
+    getAllCategories: () => {
+      return allCategories;
+    },
+
+    postCategory: async (_parent, args) => {
       const { category } = args;
+      console.log('mai');
       try {
-        const categories = await axios.get(
+        const keywords = await axios.get(
           `https://api.datamuse.com/words?ml=${category}`
         );
-        return categories.data.slice(0, 9).map((item) => {
+
+        console.log(keywords);
+
+        return keywords.data.slice(0, 9).map((item) => {
           return item;
         });
       } catch (error) {
+        console.log(error);
         throw error;
       }
     },
