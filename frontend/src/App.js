@@ -31,6 +31,7 @@ function App() {
   let row = {};
   let keywordsString = '';
   let keywordsArray = [];
+  let keywordsLength = 1;
 
   const handelChange = ({ target: { value } }) => {
     value = value.trim().toLowerCase();
@@ -47,8 +48,9 @@ function App() {
       keywordsString += `${item.word}, `;
     });
     keywordsArray = keywordsString.split(',');
-    row = { ...row, keywords: keywordsArray[0] };
+    row = { ...row, keywords: [keywordsArray[0]] };
     rows.push(row);
+    return row.keywords.length;
   };
 
   return (
@@ -66,7 +68,7 @@ function App() {
       />
 
       {categories.map((category) => {
-        getRows(category);
+        keywordsLength = getRows(category);
       })}
 
       <Table
@@ -74,7 +76,8 @@ function App() {
         columns={['Category', 'Keywords', '']}
         id={1}
         className="app__table"
-        keywords={keywordsString}
+        keywords={keywordsArray}
+        keywordsLength={keywordsLength}
       />
 
       <div className="app__button">
