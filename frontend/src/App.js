@@ -6,8 +6,8 @@ import Table from './components/Table';
 import './style.scss';
 
 const GET_INFO = gql`
-  {
-    allCategories {
+  query allCategories($category: String) {
+    allCategories(category: $category) {
       word
       score
       tags
@@ -16,9 +16,13 @@ const GET_INFO = gql`
 `;
 
 function App() {
-  const [category, setCategory] = useState('ring');
+  const [input, setInput] = useState('');
 
-  const { data, loading, error } = useQuery(GET_INFO);
+  const [categories, setCategories] = useState(['sport']);
+
+  const { data, loading, error } = useQuery(GET_INFO, {
+    variables: { category: 'english' },
+  });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
@@ -26,13 +30,24 @@ function App() {
   const rows = [];
   let row = {};
   let keywordsString = '';
+  let keywordsArray = [];
+
+  const handelChange = ({ target: { value } }) => {
+    value = value.trim().toLowerCase();
+    setInput(value);
+  };
+
+  const handelClick = () => {
+    setCategories((categories) => categories.concat(input));
+  };
 
   const getRows = (category) => {
     row = { title: category };
     data.allCategories.map((item) => {
       keywordsString += `${item.word}, `;
     });
-    row = { ...row, keywords: keywordsString.split(',')[0] };
+    keywordsArray = keywordsString.split(',');
+    row = { ...row, keywords: keywordsArray[0] };
     rows.push(row);
   };
 
@@ -47,13 +62,12 @@ function App() {
         name="category"
         placeholder="Type Category..."
         className="app__input"
-        onChange={(event) => {
-          event.preventDefault();
-          setCategory(event.target.value.trim().toLowerCase());
-        }}
+        onChange={handelChange}
       />
 
-      {getRows(category)}
+      {categories.map((category) => {
+        getRows(category);
+      })}
 
       <Table
         rows={rows}
@@ -64,7 +78,9 @@ function App() {
       />
 
       <div className="app__button">
-        <button className="app__button--text">Add Category</button>
+        <button className="app__button--text" onClick={handelClick}>
+          Add Category
+        </button>
       </div>
     </div>
   );

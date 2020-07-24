@@ -16,12 +16,11 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     allCategories: async (category) => {
-      category = 'ring';
       try {
         const categories = await axios.get(
           `https://api.datamuse.com/words?ml=${category}`
         );
-        return categories.data.slice(0, 10).map((item) => {
+        return categories.data.slice(0, 9).map((item) => {
           return item;
         });
       } catch (error) {
