@@ -50,6 +50,7 @@ function App() {
   };
 
   const addKeyword = (e) => {
+    console.log(e.target.parentNode.nodeName.toLowerCase());
     if (e.target.parentNode.nodeName.toLowerCase() === 'tr') {
       const id = e.target.parentNode.getAttribute('data-id');
       console.log(id);

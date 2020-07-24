@@ -27,9 +27,11 @@ export default function Table({ rows, columns, id, className, addKeyword }) {
       acc.push(
         <tr key={`${el}-${idx}`} data-id={el.id}>
           {cells}
-          <button className="app__button--icon" onClick={addKeyword}>
-            <FontAwesomeIcon icon={faPlusCircle} className="app__icon" />
-          </button>
+          <FontAwesomeIcon
+            icon={faPlusCircle}
+            className="app__icon"
+            onClick={addKeyword}
+          />
         </tr>
       );
       return acc;

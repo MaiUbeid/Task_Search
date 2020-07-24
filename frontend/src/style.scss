@@ -83,17 +83,14 @@ body {
       background-color: #fe2f2f;
       cursor: pointer;
     }
-
-    &--icon {
-      background-color: transparent;
-      border: none;
-      outline: none;
-      color: #ffffff;
-      cursor: pointer;
-    }
   }
 
   &__icon {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    cursor: pointer;
     margin: 1rem;
   }
 }
