@@ -8,23 +8,15 @@ import './style.scss';
 const GET_INFO = gql`
   {
     allCategories {
-      id
-      title
-      keywords
-    }
-  }
-`;
-
-const POST_CATEGORY = gql`
-  {
-    postCategory(id: Int, title: String) {
-      Category
+      word
+      score
+      tags
     }
   }
 `;
 
 function App() {
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('ring');
 
   const { data, loading, error } = useQuery(GET_INFO);
 
@@ -38,6 +30,7 @@ function App() {
       <h1 className="app__logo">
         Get <span className="app__logo--span">Categories</span>
       </h1>
+
       <input
         type="text"
         name="category"
@@ -45,16 +38,10 @@ function App() {
         className="app__input"
         onChange={(event) => setCategory(event.target.value)}
       />
+
       {data.allCategories.map((item) => {
-        let row = { title: item.title };
-        item.keywords.map((keyword) => {
-          row = {
-            ...row,
-            keywords: keyword,
-          };
-          rows.push(row);
-          return keyword;
-        });
+        let row = { title: category, keywords: item.word };
+        rows.push(row);
       })}
 
       <Table
