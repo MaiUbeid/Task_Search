@@ -59,7 +59,7 @@ const typeDefs = gql`
 
   type Query {
     getAllCategories: [Category]
-    postCategory: [ApiCategory]
+    postCategory(category: String): [ApiCategory]
   }
 `;
 
@@ -71,11 +71,13 @@ const resolvers = {
 
     postCategory: async (_parent, args) => {
       const { category } = args;
+      console.log(category);
       try {
-        const keywords = await axios.get(
+        const keywords = await axios.post(
           `https://api.datamuse.com/words?ml=${category}`
         );
 
+        console.log(keywords);
         addCategoryJson(keywords);
 
         // return keywords.data.slice(0, 9).map((item) => {
