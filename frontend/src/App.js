@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
@@ -24,6 +24,8 @@ const POST_CATEGORY = gql`
 `;
 
 function App() {
+  const [category, setCategory] = useState('');
+
   const { data, loading, error } = useQuery(GET_INFO);
 
   if (loading) return <p>Loading...</p>;
@@ -41,6 +43,7 @@ function App() {
         name="category"
         placeholder="Type Category..."
         className="app__input"
+        onChange={(event) => setCategory(event.target.value)}
       />
       {data.allCategories.map((item) => {
         let row = { title: item.title };
