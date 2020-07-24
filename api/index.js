@@ -11,6 +11,7 @@ const typeDefs = gql`
 
   type Query {
     allCategories: [Category]
+    postCategory(id: Int!, title: String!): Category
   }
 `;
 
@@ -18,6 +19,10 @@ const resolvers = {
   Query: {
     allCategories: () => {
       return data;
+    },
+    postCategory: (_, { id }, { title }) => {
+      return;
+      // something will do to post the category
     },
   },
 };

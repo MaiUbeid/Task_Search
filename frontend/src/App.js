@@ -17,7 +17,7 @@ const GET_INFO = gql`
 
 const POST_CATEGORY = gql`
   {
-    postCategory($id: Int!, $title: String!) {
+    postCategory(id: Int, title: String) {
       Category
     }
   }
