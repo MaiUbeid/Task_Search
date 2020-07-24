@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default function Table({ rows, columns, id, className }) {
+export default function Table({ rows, columns, id, className, keywords }) {
   const renderHead = (columnsData) => {
     return columnsData.reduce((acc, el, idx, arr) => {
       acc.push(
@@ -26,7 +26,7 @@ export default function Table({ rows, columns, id, className }) {
       ));
       acc.push(
         <tr key={`${el}-${idx}`}>
-          {cells}{' '}
+          {cells}
           <button className="app__button--icon">
             <FontAwesomeIcon icon={faPlusCircle} className="app__icon" />
           </button>
@@ -46,6 +46,7 @@ export default function Table({ rows, columns, id, className }) {
 
 Table.defaultProps = {
   className: '',
+  keywords: [],
 };
 
 Table.propTypes = {
@@ -53,4 +54,5 @@ Table.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.string).isRequired,
   id: PropTypes.number.isRequired,
   className: PropTypes.string,
+  keywords: PropTypes.arrayOf(PropTypes.string),
 };

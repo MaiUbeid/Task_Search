@@ -27,6 +27,15 @@ function App() {
   let row = {};
   let keywordsString = '';
 
+  const getRows = (category) => {
+    row = { title: category };
+    data.allCategories.map((item) => {
+      keywordsString += `${item.word}, `;
+    });
+    row = { ...row, keywords: keywordsString.split(',')[0] };
+    rows.push(row);
+  };
+
   return (
     <div className="app">
       <h1 className="app__logo">
@@ -44,20 +53,14 @@ function App() {
         }}
       />
 
-      {
-        ((row = { title: category }),
-        (data.allCategories.map((item) => {
-          keywordsString += `${item.word}, `;
-        }),
-        (row = { ...row, keywords: keywordsString.split(',')[0] }),
-        rows.push(row)))
-      }
+      {getRows(category)}
 
       <Table
         rows={rows}
         columns={['Category', 'Keywords', '']}
         id={1}
         className="app__table"
+        keywords={keywordsString}
       />
 
       <div className="app__button">
