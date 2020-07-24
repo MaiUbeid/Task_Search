@@ -23,7 +23,7 @@ const resolvers = {
         const categories = await axios.get(
           `https://api.datamuse.com/words?ml=${category}`
         );
-        return categories.data.map((item) => {
+        return categories.data.slice(0, 10).map((item) => {
           return item;
         });
       } catch (error) {

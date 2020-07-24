@@ -24,6 +24,8 @@ function App() {
   if (error) return <p>Error</p>;
 
   const rows = [];
+  let row = {};
+  let keywordsString = '';
 
   return (
     <div className="app">
@@ -36,13 +38,20 @@ function App() {
         name="category"
         placeholder="Type Category..."
         className="app__input"
-        onChange={(event) => setCategory(event.target.value)}
+        onChange={(event) => {
+          event.preventDefault();
+          setCategory(event.target.value.trim().toLowerCase());
+        }}
       />
 
-      {data.allCategories.map((item) => {
-        let row = { title: category, keywords: item.word };
-        rows.push(row);
-      })}
+      {
+        ((row = { title: category }),
+        (data.allCategories.map((item) => {
+          keywordsString += `${item.word}, `;
+        }),
+        (row = { ...row, keywords: keywordsString.split(',')[0] }),
+        rows.push(row)))
+      }
 
       <Table
         rows={rows}
