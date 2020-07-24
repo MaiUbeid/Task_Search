@@ -78,5 +78,17 @@ body {
       text-transform: capitalize;
       background-color: #fe2f2f;
     }
+
+    &--icon {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      color: #ffffff;
+      cursor: pointer;
+    }
+  }
+
+  &__icon {
+    margin: 1rem;
   }
 }

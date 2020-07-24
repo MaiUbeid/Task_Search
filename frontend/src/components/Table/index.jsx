@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Table({ rows, columns, id, className }) {
   const renderHead = (columnsData) => {
@@ -20,11 +22,16 @@ export default function Table({ rows, columns, id, className }) {
     return rowsData.reduce((acc, el, idx, arr) => {
       const rowCells = Object.keys(el);
       const cells = rowCells.map((cell, idx, arr) => (
-        <td key={`${el[cell]}-${idx}`} className="dataTableClass__td">
-          {el[cell]}
-        </td>
+        <td key={`${el[cell]}-${idx}`}>{el[cell]}</td>
       ));
-      acc.push(<tr key={`${el}-${idx}`}>{cells}</tr>);
+      acc.push(
+        <tr key={`${el}-${idx}`}>
+          {cells}{' '}
+          <button className="app__button--icon">
+            <FontAwesomeIcon icon={faPlusCircle} className="app__icon" />
+          </button>
+        </tr>
+      );
       return acc;
     }, []);
   };

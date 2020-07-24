@@ -56,7 +56,7 @@ function App() {
 
       <Table
         rows={rows}
-        columns={['Category', 'Keywords']}
+        columns={['Category', 'Keywords', '']}
         id={1}
         className="app__table"
       />
