@@ -27,7 +27,7 @@ const POST_CATEGORY = gql`
 
 function App() {
   const [input, setInput] = useState('');
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState(['sport', 'dance', 'write']);
   const rows = [];
 
   const {
@@ -39,6 +39,8 @@ function App() {
   const { data, error, loading } = useQuery(POST_CATEGORY, {
     variables: { category: categories[categories.length - 1] },
   });
+
+  console.log('data', data);
 
   const handleChange = ({ target: { value } }) => {
     value = value.trim().toLowerCase();
