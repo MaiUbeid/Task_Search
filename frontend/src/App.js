@@ -50,10 +50,12 @@ function App() {
   };
 
   const addKeyword = (e) => {
-    console.log(e.target.parentNode.nodeName.toLowerCase());
     if (e.target.parentNode.nodeName.toLowerCase() === 'tr') {
       const id = e.target.parentNode.getAttribute('data-id');
-      console.log(id);
+      const { title } = Categories.getAllCategories.find((item) => {
+        if (item.id == id) return item;
+      });
+      console.log(title); // here need to make request with the category title to get new keyword
     }
   };
 
