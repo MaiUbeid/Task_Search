@@ -48,7 +48,7 @@ function App() {
       keywordsString += `${item.word}, `;
     });
     keywordsArray = keywordsString.split(',');
-    row = { ...row, keywords: [keywordsArray[0]] };
+    row = { ...row, keywords: [keywordsArray.slice(0, 1)] };
     rows.push(row);
     return row.keywords.length;
   };

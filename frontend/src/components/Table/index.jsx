@@ -12,7 +12,8 @@ export default function Table({
   keywordsLength,
 }) {
   const addKeyword = (keywords, keywordsLength) => {
-    console.log(keywords, keywordsLength); // here need to add another keyword on the row
+    const newKeywords = [keywords.slice(0, keywordsLength + 1)];
+    console.log(newKeywords); /// here wrong code
   };
 
   const renderHead = (columnsData) => {

@@ -15,7 +15,8 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    allCategories: async (category) => {
+    allCategories: async (_parent, args) => {
+      const { category } = args;
       try {
         const categories = await axios.get(
           `https://api.datamuse.com/words?ml=${category}`
