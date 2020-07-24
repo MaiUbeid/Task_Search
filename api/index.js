@@ -1,8 +1,6 @@
 const { ApolloServer, gql } = require('apollo-server');
 const axios = require('axios');
 
-const data = require('./data.json');
-
 const typeDefs = gql`
   type Category {
     word: String
