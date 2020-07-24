@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function Table({ rows, columns, id, className }) {
   const renderHead = (columnsData) => {
@@ -35,3 +36,14 @@ export default function Table({ rows, columns, id, className }) {
     </table>
   );
 }
+
+Table.defaultProps = {
+  className: '',
+};
+
+Table.propTypes = {
+  rows: PropTypes.arrayOf(PropTypes.object).isRequired,
+  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
+  id: PropTypes.number.isRequired,
+  className: PropTypes.string,
+};

@@ -10,7 +10,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
-  uri: `http://localhost:4000`,
+  uri: `http://localhost:4000`, // `https://www.datamuse.com/words?ml=${category}`
 });
 
 const client = new ApolloClient({

@@ -15,6 +15,14 @@ const GET_INFO = gql`
   }
 `;
 
+const POST_CATEGORY = gql`
+  {
+    postCategory($id: Int!, $title: String!) {
+      keywords
+    }
+  }
+`;
+
 function App() {
   const { data, loading, error } = useQuery(GET_INFO);
 
@@ -49,6 +57,7 @@ function App() {
       <Table
         rows={rows}
         columns={['Category', 'Keywords']}
+        id={1}
         className="app__table"
       />
 
