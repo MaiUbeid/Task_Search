@@ -49,6 +49,13 @@ function App() {
     setCategories((categories) => categories.concat(input));
   };
 
+  const addKeyword = (e) => {
+    if (e.target.parentNode.nodeName.toLowerCase() === 'tr') {
+      const id = e.target.parentNode.getAttribute('data-id');
+      console.log(id);
+    }
+  };
+
   if (CategoriesLoading) return <p>Loading...</p>;
   if (CategoriesError) return <p>Error</p>;
 
@@ -68,6 +75,7 @@ function App() {
 
       {Categories.getAllCategories.map((category) => {
         rows.push({
+          id: category.id,
           title: category.title,
           keywords: category.keywords.slice(0, 3).join(', '),
         });
@@ -78,6 +86,7 @@ function App() {
         columns={['Category', 'Keywords', '']}
         id={1}
         className="app__table"
+        addKeyword={addKeyword}
       />
 
       <div className="app__button">

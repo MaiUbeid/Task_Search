@@ -3,19 +3,7 @@ import PropTypes from 'prop-types';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default function Table({
-  rows,
-  columns,
-  id,
-  className,
-  keywords,
-  keywordsLength,
-}) {
-  const addKeyword = (keywords, keywordsLength) => {
-    const newKeywords = [keywords.slice(0, keywordsLength + 1)];
-    console.log(newKeywords); /// here wrong code
-  };
-
+export default function Table({ rows, columns, id, className, addKeyword }) {
   const renderHead = (columnsData) => {
     return columnsData.reduce((acc, el, idx, arr) => {
       acc.push(
@@ -37,12 +25,9 @@ export default function Table({
         <td key={`${el[cell]}-${idx}`}>{el[cell]}</td>
       ));
       acc.push(
-        <tr key={`${el}-${idx}`}>
+        <tr key={`${el}-${idx}`} data-id={el.id}>
           {cells}
-          <button
-            className="app__button--icon"
-            onClick={() => addKeyword(keywords, keywordsLength)}
-          >
+          <button className="app__button--icon" onClick={addKeyword}>
             <FontAwesomeIcon icon={faPlusCircle} className="app__icon" />
           </button>
         </tr>
@@ -61,7 +46,7 @@ export default function Table({
 
 Table.defaultProps = {
   className: '',
-  keywords: [],
+  addKeyword: () => {},
 };
 
 Table.propTypes = {
@@ -69,5 +54,5 @@ Table.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.string).isRequired,
   id: PropTypes.number.isRequired,
   className: PropTypes.string,
-  keywords: PropTypes.arrayOf(PropTypes.string),
+  addKeyword: PropTypes.func,
 };
