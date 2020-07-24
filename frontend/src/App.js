@@ -21,7 +21,7 @@ function App() {
   const [categories, setCategories] = useState(['sport']);
 
   const { data, loading, error } = useQuery(GET_INFO, {
-    variables: { category: 'english' },
+    variables: { category: categories[categories.length - 1] },
   });
 
   if (loading) return <p>Loading...</p>;
