@@ -6,25 +6,7 @@ const queryString = require('querystring');
 
 const { allCategories } = require('./categories.json');
 
-const addCategoryJson = () => {
-  // data will be an argument from api
-  const data = {
-    id: allCategories.length + 1,
-    title: 'write',
-    keywords: [
-      'publish',
-      'compose',
-      'pen',
-      'spell',
-      'drop',
-      'a line',
-      'indite',
-      'read',
-      'rewrite',
-      'submit',
-    ],
-  };
-
+const addCategoryJson = (newCategory) => {
   const convertedData = queryString.parse(allCategories);
   const filePath = path.join(__dirname, 'categories.json');
   fs.readFile(filePath, (error, file) => {
@@ -35,7 +17,7 @@ const addCategoryJson = () => {
       const categories = JSON.parse(file);
       const fileData = convertedData;
       console.log(fileData);
-      categories.allCategories.push(data);
+      categories.allCategories.push(newCategory);
       console.log(categories);
       fs.writeFile(filePath, JSON.stringify(categories), (err) =>
         console.log(err)
@@ -71,14 +53,22 @@ const resolvers = {
 
     postCategory: async (_parent, args) => {
       const { category } = args;
-      console.log(category);
       try {
-        const keywords = await axios.post(
+        const keywords = await axios.get(
           `https://api.datamuse.com/words?ml=${category}`
         );
 
-        console.log(keywords);
-        addCategoryJson(keywords);
+        const newCategory = {
+          id: allCategories.length + 1,
+          title: category,
+          keywords: keywords.data
+            .map((item) => {
+              return item.word;
+            })
+            .slice(0, 3),
+        };
+
+        addCategoryJson(newCategory);
 
         return keywords.data.slice(0, 9).map((item) => {
           return item;
