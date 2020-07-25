@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import React, { useState, useEffect } from 'react';
+import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import Table from './components/Table';
@@ -21,6 +21,11 @@ const POST_CATEGORY = gql`
       word
       tags
     }
+    getAllCategories {
+      id
+      title
+      keywords
+    }
   }
 `;
 
@@ -29,33 +34,37 @@ function App() {
   const [categories, setCategories] = useState([]);
   const rows = [];
 
-  const {
-    data: Categories,
-    loading: CategoriesLoading,
-    error: CategoriesError,
-  } = useQuery(GET_ALL_CATEGORIES);
+  const [getCats, {loading: CategoriesLoading, data: Categories, error: CategoriesError}] = 
+  useLazyQuery(GET_ALL_CATEGORIES);
 
-  const { data, error, loading } = useQuery(POST_CATEGORY, {
+  const [ postCat, {loading, data}] = useLazyQuery(POST_CATEGORY, {
     variables: {
-      category: categories.length > 0 && categories[categories.length - 1],
+      category: input,
     },
-  });
+    onCompleted: () => getCats(),
+  })
 
-  console.log('data', data);
+  useEffect(() => {
+    getCats()
+    if(Categories && Categories.getAllCategories){
+      setCategories(Categories.getAllCategories)
+    }
+
+  }, [Categories])
 
   const handleChange = ({ target: { value } }) => {
     value = value.trim().toLowerCase();
     setInput(value);
   };
 
-  const handleClick = () => {
-    setCategories((categories) => categories.concat(input));
+  const handleClick =  () => {
+    postCat();
   };
 
   const addKeyword = (e) => {
     if (e.target.parentNode.nodeName.toLowerCase() === 'tr') {
       const id = e.target.parentNode.getAttribute('data-id');
-      const { title } = Categories.getAllCategories.find((item) => {
+      const { title } = categories.find((item) => {
         if (item.id == id) return item;
       });
       console.log(title); // here need to make request with the category title to get new keyword
@@ -79,7 +88,7 @@ function App() {
         onChange={handleChange}
       />
 
-      {Categories.getAllCategories.map((category) => {
+      {categories.map((category) => {
         rows.push({
           id: category.id,
           title: category.title,
