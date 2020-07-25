@@ -16,8 +16,8 @@ const GET_ALL_CATEGORIES = gql`
 `;
 
 const POST_CATEGORY = gql`
-  query allKeywords($category: String) {
-    allKeywords(category: $category) {
+  query postCategory($category: String) {
+    postCategory(category: $category) {
       word
       tags
     }
