@@ -2,7 +2,6 @@ const { ApolloServer, gql } = require('apollo-server');
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
-const queryString = require('querystring');
 
 const { allCategories } = require('./categories.json');
 
