@@ -19,7 +19,6 @@ const POST_CATEGORY = gql`
   query allKeywords($category: String) {
     allKeywords(category: $category) {
       word
-      score
       tags
     }
   }
@@ -82,7 +81,7 @@ function App() {
         rows.push({
           id: category.id,
           title: category.title,
-          keywords: category.keywords.slice(0, 3).join(', '),
+          keywords: category.keywords.join(', '),
         });
       })}
 
