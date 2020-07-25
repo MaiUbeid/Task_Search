@@ -42,7 +42,6 @@ function App() {
   });
 
   const handleChange = ({ target: { value } }) => {
-    console.log(1111111111, value);
     if (value !== '') {
       value = value.trim().toLowerCase();
       setInput(value);
