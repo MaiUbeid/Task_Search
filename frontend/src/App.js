@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useQuery, useLazyQuery } from '@apollo/react-hooks';
+import React, { useState } from 'react';
+import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import Table from './components/Table';
@@ -21,11 +21,6 @@ const POST_CATEGORY = gql`
       word
       tags
     }
-    getAllCategories {
-      id
-      title
-      keywords
-    }
   }
 `;
 
@@ -34,23 +29,17 @@ function App() {
   const [categories, setCategories] = useState([]);
   const rows = [];
 
-  const [getCats, {loading: CategoriesLoading, data: Categories, error: CategoriesError}] = 
-  useLazyQuery(GET_ALL_CATEGORIES);
+  const {
+    data: Categories,
+    loading: CategoriesLoading,
+    error: CategoriesError,
+  } = useQuery(GET_ALL_CATEGORIES);
 
-  const [ postCat, {loading, data}] = useLazyQuery(POST_CATEGORY, {
+  useQuery(POST_CATEGORY, {
     variables: {
-      category: input,
+      category: categories.length > 0 && categories[categories.length - 1],
     },
-    onCompleted: () => getCats(),
-  })
-
-  useEffect(() => {
-    getCats()
-    if(Categories && Categories.getAllCategories){
-      setCategories(Categories.getAllCategories)
-    }
-
-  }, [Categories])
+  });
 
   const handleChange = ({ target: { value } }) => {
     if (value !== '') {
@@ -59,14 +48,14 @@ function App() {
     }
   };
 
-  const handleClick =  () => {
-    postCat();
+  const handleClick = () => {
+    setCategories((categories) => categories.concat(input));
   };
 
   const addKeyword = (e) => {
     if (e.target.parentNode.nodeName.toLowerCase() === 'tr') {
       const id = e.target.parentNode.getAttribute('data-id');
-      const { title } = categories.find((item) => {
+      const { title } = Categories.getAllCategories.find((item) => {
         if (item.id == id) return item;
       });
       console.log(title); // here need to make request with the category title to get new keyword
@@ -90,7 +79,7 @@ function App() {
         onChange={handleChange}
       />
 
-      {categories.map((category) => {
+      {Categories.getAllCategories.map((category) => {
         rows.push({
           id: category.id,
           title: category.title,
