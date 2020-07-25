@@ -53,8 +53,10 @@ function App() {
   }, [Categories])
 
   const handleChange = ({ target: { value } }) => {
-    value = value.trim().toLowerCase();
-    setInput(value);
+    if (value !== '') {
+      value = value.trim().toLowerCase();
+      setInput(value);
+    }
   };
 
   const handleClick =  () => {
