@@ -35,17 +35,18 @@ function App() {
     error: CategoriesError,
   } = useQuery(GET_ALL_CATEGORIES);
 
-  const { data, error, loading } = useQuery(POST_CATEGORY, {
+  useQuery(POST_CATEGORY, {
     variables: {
       category: categories.length > 0 && categories[categories.length - 1],
     },
   });
 
-  console.log('data', data);
-
   const handleChange = ({ target: { value } }) => {
-    value = value.trim().toLowerCase();
-    setInput(value);
+    console.log(1111111111, value);
+    if (value !== '') {
+      value = value.trim().toLowerCase();
+      setInput(value);
+    }
   };
 
   const handleClick = () => {
