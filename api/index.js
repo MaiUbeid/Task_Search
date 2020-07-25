@@ -80,9 +80,9 @@ const resolvers = {
         console.log(keywords);
         addCategoryJson(keywords);
 
-        // return keywords.data.slice(0, 9).map((item) => {
-        //   return item;
-        // });
+        return keywords.data.slice(0, 9).map((item) => {
+          return item;
+        });
       } catch (error) {
         throw error;
       }
