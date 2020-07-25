@@ -26,7 +26,7 @@ const POST_CATEGORY = gql`
 
 function App() {
   const [input, setInput] = useState('');
-  const [categories, setCategories] = useState(['sport', 'dance', 'write']);
+  const [categories, setCategories] = useState([]);
   const rows = [];
 
   const {
@@ -36,7 +36,9 @@ function App() {
   } = useQuery(GET_ALL_CATEGORIES);
 
   const { data, error, loading } = useQuery(POST_CATEGORY, {
-    variables: { category: categories[categories.length - 1] },
+    variables: {
+      category: categories.length > 0 && categories[categories.length - 1],
+    },
   });
 
   console.log('data', data);
