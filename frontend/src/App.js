@@ -55,10 +55,14 @@ function App() {
   const addKeyword = (e) => {
     if (e.target.parentNode.nodeName.toLowerCase() === 'tr') {
       const id = e.target.parentNode.getAttribute('data-id');
-      const { title } = Categories.getAllCategories.find((item) => {
+      const { title, keywords } = Categories.getAllCategories.find((item) => {
         if (item.id == id) return item;
       });
-      console.log(title); // here need to make request with the category title to get new keyword
+      console.log(title, keywords);
+      const newKeyword = 'mai'; // here need to make request with the category title to get new keyword
+      if (!keywords.includes(newKeyword)) {
+        // add keyword to json and table
+      }
     }
   };
 
