@@ -9,9 +9,9 @@ const { allCategories } = require('./categories.json');
 const addCategoryJson = (newCategory) => {
   const convertedData = queryString.parse(allCategories);
   const filePath = path.join(__dirname, 'categories.json');
-  fs.readFile(filePath, (error, file) => {
+  fs.readFileSync(filePath, (error, file) => {
     if (error) {
-      response.writeHead(500, { 'Content-Type': 'application/javascript' });
+      response.writeHead(500, { 'Content-Type': 'application/javascript' }); // there is no response object here !!
       response.end();
     } else {
       const categories = JSON.parse(file);
@@ -19,7 +19,7 @@ const addCategoryJson = (newCategory) => {
       console.log(fileData);
       categories.allCategories.push(newCategory);
       console.log(categories);
-      fs.writeFile(filePath, JSON.stringify(categories), (err) =>
+      fs.writeFileSync(filePath, JSON.stringify(categories), (err) =>
         console.log(err)
       );
     }
@@ -68,7 +68,7 @@ const resolvers = {
             .slice(0, 3),
         };
 
-        addCategoryJson(newCategory);
+        await addCategoryJson(newCategory);
 
         return keywords.data.slice(0, 9).map((item) => {
           return item;
